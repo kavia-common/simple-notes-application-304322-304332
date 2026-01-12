@@ -1,104 +1,376 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #64748b;
+
+  --border: #e5e7eb;
+  --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+
+  --primary: #3b82f6;
+  --accent: #06b6d4;
+  --danger: #ef4444;
+
+  --ring: rgba(59, 130, 246, 0.25);
+
+  --radius: 14px;
+  --radius-sm: 10px;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+.NotesApp {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.08), var(--bg) 40%);
+  color: var(--text);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Header */
+.Header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  background: rgba(249, 250, 251, 0.75);
+  border-bottom: 1px solid var(--border);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 18px 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Header__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.Header__logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.25);
+  flex: 0 0 auto;
+}
+
+.Header__title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 16px;
+  line-height: 1.1;
+}
+
+.Header__subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: min(56vw, 520px);
+}
+
+.Header__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Layout */
+.Main {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 18px;
+  padding: 18px 20px 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.Sidebar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+
   display: flex;
   flex-direction: column;
+  min-height: 520px;
+}
+
+.Sidebar__header {
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+.Sidebar__label {
+  font-weight: 700;
   font-size: 14px;
-  font-weight: 600;
+}
+
+.Sidebar__count {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(100, 116, 139, 0.12);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.NotesList {
+  padding: 10px;
+  overflow: auto;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.NoteItem {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.NoteItem:hover {
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.NoteItem--active {
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 0 4px var(--ring);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.NoteItem__title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.NoteItem__meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Editor */
+.Editor {
+  min-width: 0;
+}
+
+.Card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.Card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.Card__title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 18px;
+}
+
+.Card__subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.Card__headerActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.Field {
+  display: grid;
+  gap: 8px;
+}
+
+.Field__label {
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.85);
+}
+
+.Field__input,
+.Field__textarea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.Field__textarea {
+  resize: vertical;
+  min-height: 240px;
+  line-height: 1.4;
+}
+
+.Field__input:focus,
+.Field__textarea:focus {
+  border-color: rgba(59, 130, 246, 0.65);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.Card__footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.Hint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.Code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: rgba(100, 116, 139, 0.1);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  color: rgba(17, 24, 39, 0.9);
+}
+
+/* Buttons */
+.Button {
+  border: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  box-shadow: 0 10px 18px rgba(59, 130, 246, 0.2);
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+
+.Button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 22px rgba(59, 130, 246, 0.25);
+}
+
+.Button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.Button--secondary {
+  background: rgba(100, 116, 139, 0.12);
+  color: rgba(17, 24, 39, 0.9);
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  box-shadow: none;
+}
+
+.Button--secondary:hover {
+  box-shadow: none;
+}
+
+.Button--danger {
+  background: rgba(239, 68, 68, 0.12);
+  color: rgba(127, 29, 29, 0.95);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  box-shadow: none;
+}
+
+.Notice {
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  background: rgba(100, 116, 139, 0.08);
+  color: rgba(17, 24, 39, 0.9);
+  font-size: 13px;
+}
+
+.Notice--error {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.08);
+  color: rgba(127, 29, 29, 0.95);
+}
+
+.EmptyState {
+  border: 1px dashed rgba(100, 116, 139, 0.35);
+  border-radius: 12px;
+  padding: 16px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.EmptyState__title {
+  font-weight: 800;
+  color: rgba(17, 24, 39, 0.9);
+  margin-bottom: 4px;
+}
+
+.EmptyState__desc {
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 920px) {
+  .Main {
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .Sidebar {
+    min-height: auto;
+  }
+
+  .Card {
+    min-height: auto;
   }
 }
